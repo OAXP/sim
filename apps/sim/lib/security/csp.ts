@@ -140,8 +140,12 @@ export function buildCSPString(directives: CSPDirectives): string {
  */
 export function generateRuntimeCSP(): string {
   const socketUrl = getEnv('NEXT_PUBLIC_SOCKET_URL') || 'http://localhost:3002'
-  const socketWsUrl =
-    socketUrl.replace('http://', 'ws://').replace('https://', 'wss://') || 'ws://localhost:3002'
+
+  const useHttpSocket = getEnv('USE_HTTP_SOCKET') === 'true'
+  const socketWsUrl = useHttpSocket
+    ? socketUrl
+    : socketUrl.replace('http://', 'ws://').replace('https://', 'wss://') || 'ws://localhost:3002'
+
   const appUrl = getEnv('NEXT_PUBLIC_APP_URL') || ''
   const ollamaUrl = getEnv('OLLAMA_URL') || 'http://localhost:11434'
 
