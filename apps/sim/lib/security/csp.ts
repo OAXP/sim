@@ -141,8 +141,7 @@ export function buildCSPString(directives: CSPDirectives): string {
 export function generateRuntimeCSP(): string {
   const socketUrl = getEnv('NEXT_PUBLIC_SOCKET_URL') || 'http://localhost:3002'
 
-  const useHttpSocket = getEnv('USE_HTTP_SOCKET') === 'true'
-  const socketWsUrl = useHttpSocket
+  const socketWsUrl = getEnv('USE_HTTP_SOCKET')
     ? socketUrl
     : socketUrl.replace('http://', 'ws://').replace('https://', 'wss://') || 'ws://localhost:3002'
 
