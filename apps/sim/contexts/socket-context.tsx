@@ -173,8 +173,11 @@ export function SocketProvider({ children, user }: SocketProviderProps) {
           timestamp: new Date().toISOString(),
         })
 
+        const transports =
+          getEnv('USE_HTTP_SOCKET') === 'true' ? ['polling'] : ['websocket', 'polling']
+
         const socketInstance = io(socketUrl, {
-          transports: ['websocket', 'polling'], // Keep polling fallback for reliability
+          transports: transports, // Keep polling fallback for reliability
           withCredentials: true,
           reconnectionAttempts: Number.POSITIVE_INFINITY, // Socket.IO handles base reconnection
           reconnectionDelay: 1000, // Start with 1 second delay
